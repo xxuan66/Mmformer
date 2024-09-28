@@ -19,10 +19,10 @@ class Model(nn.Module):
         ……
 
     def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):
-        means = x_enc.mean(1, keepdim=True).detach()  # (256,1,1)
-        x_enc = x_enc - means  # (256,576,1)
-        stdev = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)  # (256,1,1)
-        x_enc /= stdev  # (256,576,1)
+        means = x_enc.mean(1, keepdim=True).detach()
+        x_enc = x_enc - means
+        stdev = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
+        x_enc /= stdev
 
         MutliScaleFeaturesProcessor = [ScaleProcessor(scale, linear) for scale, linear in
                                        zip([self.scale1, self.scale2, self.scale3],
